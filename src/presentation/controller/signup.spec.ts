@@ -8,7 +8,7 @@ describe('SignUp Controller', () => {
       body: {
         email: 'any_email@email.com',
         password: 'any_password',
-        passwordConfirmation: 'any_email'
+        passwordConfirmation: 'any_passwordConfirmation'
       }
     }
     const httpResponse = systemUnderTest.handle(httpRequest)
@@ -36,11 +36,25 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_email@email.com',
         email: 'any_email@email.com',
-        passwordConfirmation: 'any_email'
+        passwordConfirmation: 'any_passwordConfirmation'
       }
     }
     const httpResponse = systemUnderTest.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('password'))
+  })
+
+  it('should return 400 if no passwordConfirmation is provided ', () => {
+    const systemUnderTest = new SignUpController()
+    const httpRequest = {
+      body: {
+        name: 'any_email@email.com',
+        email: 'any_email@email.com',
+        password: 'any_password'
+      }
+    }
+    const httpResponse = systemUnderTest.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 })
