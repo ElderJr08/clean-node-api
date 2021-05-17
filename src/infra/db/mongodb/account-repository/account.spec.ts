@@ -3,7 +3,6 @@ import { AccountMongoRepository } from './account'
 
 describe('Account Mongo Repository', () => {
   beforeAll(async () => {
-    // eslint-disable-next-line
     await MongoHelper.connect(process.env.MONGO_URL as string)
   })
 
@@ -12,7 +11,7 @@ describe('Account Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
